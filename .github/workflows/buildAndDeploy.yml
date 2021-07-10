@@ -20,6 +20,12 @@ jobs:
       
       - uses: actions/checkout@v2
       
+      - name: Run jar build
+        run: gradle bootJar
+      
+      - name: Run echo
+        run: echo Build jar completed       
+      
       - name: Build image
         run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
         
@@ -27,8 +33,4 @@ jobs:
         run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
       
       
-      - name: Run build
-        run: gradle build
-      
-      - name: Run echo
-        run: echo Build completed          
+         
