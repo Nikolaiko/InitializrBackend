@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  
+  workflow_dispatch:
+
+jobs:
+  build:    
+    runs-on: ubuntu-latest    
+    env:
+      LOGIN: ${{ secrets.DOCKER_LOGIN }}
+      PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      NAME: ${{ secrets.DOCKER_REPOSITORY }}
+      
+    steps:      
+      - name: Login to docker.io        
+        run:  echo $PASSWORD | docker login -u $LOGIN --password-stdin
+      
+      - uses: actions/checkout@v2
+      
+      - name: Build image
+        run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
+        
+      - name: Push image to docker.io
+        run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
+      
+      
+      - name: Run build
+        run: gradle build
+      
+      - name: Run echo
+        run: echo Build completed          
