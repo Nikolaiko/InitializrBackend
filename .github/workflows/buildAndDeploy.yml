@@ -16,7 +16,7 @@ jobs:
       
     steps:      
       - name: Login to docker.io        
-        run:  echo ${{ PASSWORD }} | docker login -u ${{ LOGIN }} --password-stdin
+        run:  echo $PASSWORD | docker login -u $LOGIN --password-stdin
       
       - uses: actions/checkout@v2
       
