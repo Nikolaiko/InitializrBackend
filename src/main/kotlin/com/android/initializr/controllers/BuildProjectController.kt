@@ -23,14 +23,11 @@ class BuildProjectController @Autowired constructor(
                 "*"
             ]
     )
-    @GetMapping(value =["/project"])
+    @GetMapping(value = ["/project"])
     fun generateProject(
             @RequestParam("type") dsl: String,
             @RequestParam("groupId") groupId: String,
-            @RequestParam("artifactId") artifactId: String,
             @RequestParam("name") name: String,
-            @RequestParam("description") description: String,
-            @RequestParam("packageName") packageName: String,
             @RequestParam("dependencies", required = false) dependencies: String?,
             response: HttpServletResponse
     ) {
